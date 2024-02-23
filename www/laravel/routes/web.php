@@ -20,3 +20,11 @@ Route::get('/', function () {
 Route::get('/auth', function () {
     return view('auth');
 });
+
+Route::get('/home', function () {
+    return view('home');
+});
+
+Route::get('/home/master', function () {
+    return view('master');
+});
