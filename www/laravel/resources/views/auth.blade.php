@@ -51,13 +51,13 @@
                             <div>
                                 <span>Nama Pengguna</span>
                                 <div>
-                                    <input type="text">
+                                    <input id="user" type="text">
                                 </div>
                             </div>
                             <div>
                                 <span>Kata Sandi</span>
                                 <div>
-                                    <input type="password">
+                                    <input id="pass" type="password">
                                 </div>
                             </div>
                             <div class="text-right">
@@ -88,7 +88,7 @@
                     $.ajax({
                         url:"/api/auth/in",
                         type:"POST",
-                        data:{username:user, password:pass},
+                        data: {username:user, password:pass},
                         success: function(r){
                             if(r.status){
                                 window.location = "/home";

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->datetime('deleted_at')->nullable();
         });
 
-        DB::connection('pgsql')->select("insert into \"user\"(username, password, created_at, updated_at) values('gen','\$2y\$12\$VSmW3ZussIBDkGEM5voTwe1Rhbxz0lUyARWHXeDcEUlXrU8XMIDyG',NOW(),NOW())");
+        DB::connection('pgsql')->select("insert into \"user\"(username, password, created_at, updated_at) values('gen','\$2y\$12\$qtekF5r5BbJ5ChNfnNFrRu0ArRwWvw3HoFOl1crZZFbKpfvWg9Tye',NOW(),NOW())");
     }
 
     /**
