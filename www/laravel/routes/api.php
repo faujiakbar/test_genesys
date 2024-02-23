@@ -4,7 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\{
-    LoginController
+    LoginController,
+    InventoryController
 };
 
 /*
@@ -20,4 +21,12 @@ use App\Http\Controllers\{
 
 Route::group(["prefix" => 'auth'], function(){
     Route::post("/in", [LoginController::class, "login"]);
+});
+
+Route::group(["prefix" => 'inventory'], function(){
+    Route::post("/add", [InventoryController::class, "add"]);
+    Route::post("/edit", [InventoryController::class, "edit"]);
+    Route::post("/del", [InventoryController::class, "del"]);
+    Route::get("/show", [InventoryController::class, "show"]);
+    Route::get("/get/{id}", [InventoryController::class, "get"]);
 });
