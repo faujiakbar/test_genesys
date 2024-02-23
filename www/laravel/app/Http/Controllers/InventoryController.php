@@ -105,4 +105,39 @@ class InventoryController extends Controller {
 
         return Response()->json($return, $return['code']);
     }
+
+    public function buy(Request $r){
+        $return = [
+            "status" => true,
+            "message" => "Berhasil",
+            "data" => [],
+            "code" => 200
+        ];
+
+        $inv = Inventory::find($r->inventory_id);
+
+        if(!$inv){
+            $return['status'] = false;
+            $return['message'] = "Data tidak ditemukan";
+        }
+
+        if($return['status']){
+            if($r->jml > $inv->stok){
+                $return['status'] = false;
+                $return['message'] = "Stok melebihi permintaan, stock saat ini : ".$inv->stok;
+            } else {
+                $inv->stok -= $r->jml;
+                if(!$inv->save()){
+                    $return['status'] = false;
+                    $return['message'] = "Terjadi masalah dalam penyimpanan";
+                } else {
+                    $inv->{'total'} = $inv->harga*$r->jml;
+                    $return['data'] = $inv;
+                }
+            }
+        }
+        
+
+        return Response()->json($return, $return['code']);
+    }
 }

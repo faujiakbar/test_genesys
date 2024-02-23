@@ -29,4 +29,5 @@ Route::group(["prefix" => 'inventory'], function(){
     Route::post("/del", [InventoryController::class, "del"]);
     Route::get("/show", [InventoryController::class, "show"]);
     Route::get("/get/{id}", [InventoryController::class, "get"]);
+    Route::post("/buy", [InventoryController::class, "buy"]);
 });

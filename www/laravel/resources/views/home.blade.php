@@ -32,6 +32,50 @@
             #inventory_id {
                 min-width: 15em;
             }
+
+
+
+
+
+
+            /* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
         </style>
 
 
@@ -62,7 +106,7 @@
                             <div>
                                 <span>Jumlah Item</span>
                                 <div>
-                                    <input id="jumlah" type="text">
+                                    <input id="jml" type="text" value="1">
                                 </div>
                             </div>
                             <div class="text-right">
@@ -85,7 +129,37 @@
             </div>
         </div>
 
+<div id="myModal" class="modal">
+
+<!-- Modal content -->
+<div class="modal-content">
+<span class="close">&times;</span>
+<p>
+    <br>
+    <br>
+    Nama: <span id="nama"></span><br>
+    Jumlah: <span id="jml_save"></span><br>
+    Satuan: <span id="harga"></span><br>
+    Total: <span id="total"></span><br>
+</p>
+</div>
+
+</div>
+
         <script>
+var modal = document.getElementById("myModal");
+var span = document.getElementsByClassName("close")[0];
+
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
             $(document).ready(function(){
                 // data
                 $.ajax({
@@ -106,14 +180,21 @@
                 });
 
                 $(".submit").click(function(){
-                    var user = $("#user").val(),
-                        pass = $("#pass").val();
+                    var inventory_id = $("#inventory_id").val(),
+                        jml = $("#jml").val();
 
                     $.ajax({
-                        url:"/api/transaction/add",
+                        url:"/api/inventory/buy",
                         type:"POST",
-                        data: {username:user, password:pass},
+                        data: {inventory_id:inventory_id, jml:jml},
                         success: function(r){
+                            if(r.status){
+                                $("#jml_save").html(jml);
+                                $("#nama").html(r.data.nama);
+                                $("#harga").html(r.data.harga);
+                                $("#total").html(r.data.total);
+                                modal.style.display = "block";
+                            } else alert(r.message);
                         },
                         error: function(){
                             alert("terjadi kesalahan");
