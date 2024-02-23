@@ -27,6 +27,13 @@ class LoginController extends Controller {
             $return['message'] = "Tidak Ditemukan";
         }
 
+        if($return['status']) {
+            if(!Hash::check($r->password, $sql->password)){
+                $return['status'] = false;
+                $return['message'] = "Kata sandi tidak sesuai";
+            }
+        }
+
         return Response()->json($return, $return['code']);
     }
 }
